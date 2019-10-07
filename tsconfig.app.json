@@ -9,6 +9,7 @@
     "src/polyfills.ts"
   ],
   "include": [
+    "node_modules/angular-bootstrap-md/**/*.ts",
     "src/**/*.ts"
   ],
   "exclude": [
