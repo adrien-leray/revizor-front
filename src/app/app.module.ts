@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { FileListComponent } from './shared/components/file-list/file-list.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MarketPlaceComponent,
     ProfileComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    FileListComponent
   ],
   imports: [
     BrowserModule,
