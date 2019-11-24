@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./file-list.component.scss']
 })
 export class FileListComponent implements OnInit {
-
-  constructor() { }
+  listCard = ['a','b','c']
+  constructor() { 
+  }
 
   ngOnInit() {
   }
-
 }

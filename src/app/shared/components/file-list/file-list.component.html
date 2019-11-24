@@ -1,1 +1,50 @@
-<p>file-list works!</p>
+<div class="container-fluid">
+    <div class='row'>
+        <div class="col-12">
+            <ul>
+                <li *ngFor="let card in cards; let i = listCard">
+                    <mdb-card>
+
+                        <!--Card content-->
+                        <mdb-card-body>
+                            <div class='card-info'>
+
+                                <div class="place-img"
+                                    [style.background-image]="'url(' + 'https://media.ldlc.com/r150/ld/products/00/04/75/97/LD0004759749_2.jpg' + ')'">
+                                </div>
+
+
+                                <!--Title-->
+                                <div class="card-title">
+                                    <mdb-card-title>
+                                        <h4>Card Title</h4>
+                                    </mdb-card-title>
+
+                                    <!--Text-->
+                                    <mdb-card-text> Some quick example text to build on the card title and make up the
+                                        bulk
+                                        of
+                                        the
+                                        card's
+                                        content.
+                                    </mdb-card-text>
+                                </div>
+
+                                <div class="actions">
+                                    <a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>
+                                </div>
+
+
+
+                            </div>
+                        </mdb-card-body>
+                    </mdb-card>
+                </li>
+            </ul>
+
+
+
+
+        </div>
+    </div>
+</div>

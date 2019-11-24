@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+.place-img {
+    min-height: 120px;
+    min-width: 120px;
+    background-size: cover;
+    margin-right: 20px;
+}
+
+.card-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
