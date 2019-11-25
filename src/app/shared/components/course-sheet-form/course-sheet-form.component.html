@@ -1,0 +1,37 @@
+<mdb-card>
+    <mdb-card-body>
+
+        <mdb-card-title>
+            <h4>Edit item: {{ courseSheet?.name | titlecase }}</h4>
+        </mdb-card-title>
+
+        <form [formGroup]="form">
+            <div class="md-form">
+                <input mdbInput type="text" formControlName="name" class="form-control" placeholder="Enter a name" id="name">
+                <label for="name" class="">Name</label>
+            </div>
+
+            <div class="md-form">
+                <input mdbInput type="text" formControlName="category" class="form-control" placeholder="Enter a category" id="category">
+                <label for="category" class="">Category</label>
+            </div>
+            <div class="md-form">
+                <input mdbInput type="text" formControlName="author" class="form-control" placeholder="Enter an author" id="author">
+                <label for="author" class="">Author</label>
+            </div>
+            <div class="md-form">
+                <input mdbInput type="text" formControlName="price" class="form-control" placeholder="Enter a price" id="price">
+                <label for="price" class="">Price</label>
+            </div>
+
+            <div class="md-form">
+                <input mdbFileSelect type="file">
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <a type="submit" mdbBtn color="primary" mdbWavesEffect>Save</a>
+            </div>
+        </form>
+
+    </mdb-card-body>
+</mdb-card>

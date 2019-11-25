@@ -1,23 +1,48 @@
-<div class="d-flex flex-column">
-    <mdb-card *ngFor="let course of courses" class="card-image course mb-3 mr-3">
-
-        <!-- Content -->
-        <div class="d-flex align-items-center justify-content-between py-3 px-4">
-            <div class="d-flex">
-                <img [src]="course.image" width="64" height="64" class="mr-5">
-                <div>
-                    <span class="orange-text">
-                        {{ course.category }}
-                    </span>
-                    <h4 class="card-title pt-2"><strong>{{ course.name }}</strong></h4>
-                </div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- #region course-sheet item list -->
+        <section [ngClass]="{'col-12': !onEdit, 'col-lg-8 col-md-12': onEdit}">
+            <div class="d-flex flex-column">
+                <mdb-card *ngFor="let course of courses" class="card-image course mb-3 mr-3">
+                    <div class="d-flex align-items-center justify-content-between py-3 px-4">
+                        <div class="d-flex">
+                            <img [src]="course.image" width="64" height="64" class="mr-5">
+                            <div>
+                                <span class="orange-text">
+                                    {{ course.category }}
+                                </span>
+                                <h4 class="card-title pt-2"><strong>{{ course.name }}</strong></h4>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="activateEditMode(course)" *ngIf="!onEdit">
+                                <mdb-icon fas icon="shopping-cart" class="left"></mdb-icon>
+                                Buy for
+                                <span class="font-weight-bold">{{ course.price }}$</span>
+                            </button>
+                            <button type="button" mdbBtn color="info" outline="true" mdbWavesEffect (click)="activateEditMode(course)" *ngIf="!onEdit">
+                                <mdb-icon far icon="edit" class="left"></mdb-icon>
+                                Edit
+                            </button>
+                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="removeItem(course)" *ngIf="!onEdit">
+                                <mdb-icon far icon="trash-alt"></mdb-icon>
+                                Delete
+                            </button>
+                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="deactivateEditMode()" *ngIf="onEdit && course.id === editedItem.id">
+                                <mdb-icon fas icon="ban" class="left"></mdb-icon>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </mdb-card>
             </div>
-            <a mdbBtn color="deep-orange" class="waves-light btn-lg" mdbWavesEffect>
-                <mdb-icon far icon="clone" class="left"></mdb-icon>
-                Buy for 
-                <span class="font-weight-bold">{{ course.price }}$</span>
-            </a>
-        </div>
-        <!-- Content -->
-    </mdb-card>
+        </section>
+        <!-- #endregion -->
+
+        <!--#region course-item edit form -->
+        <section class="col-lg-4 col-md-12" *ngIf="onEdit">
+            <app-course-sheet-form [courseSheet]="editedItem"></app-course-sheet-form>
+        </section>
+        <!--#endregion-->
+    </div>
 </div>

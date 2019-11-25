@@ -1,5 +1,8 @@
+import * as uuid from 'uuid';
+
 export class CourseSheet {
 
+    id: string = uuid.v4();
     name: string;
     image: string;
     category: string;
