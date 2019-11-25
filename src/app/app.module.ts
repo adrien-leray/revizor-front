@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { CourseSheetListComponent } from './shared/components/course-sheet-list/course-sheet-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     ProfileComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    CourseSheetListComponent
   ],
   imports: [
     BrowserModule,
