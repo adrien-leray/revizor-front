@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseSheet } from '../shared/models/course-sheet';
 
 @Component({
   selector: 'app-home',
