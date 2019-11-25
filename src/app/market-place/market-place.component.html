@@ -1,1 +1,28 @@
-<p>market-place works!</p>
+<div class="row">
+    <div class="col-sm">
+        <h2>Market Place</h2>
+        <div class="d-flex flex-column">
+            <mdb-card *ngFor="let course of courses" class="card-image course mb-3 mr-3">
+
+                <!-- Content -->
+                <div class="d-flex align-items-center justify-content-between py-3 px-4">
+                    <div class="d-flex">
+                        <img [src]="course.image" width="64" height="64" class="mr-5">
+                        <div>
+                            <span class="orange-text">
+                                {{ course.category }}
+                            </span>
+                            <h4 class="card-title pt-2"><strong>{{ course.name }}</strong></h4>
+                        </div>
+                    </div>
+                    <a mdbBtn color="deep-orange" class="waves-light btn-lg" mdbWavesEffect>
+                        <mdb-icon far icon="clone" class="left"></mdb-icon>
+                        Buy for 
+                        <span class="font-weight-bold">{{ course.price }}$</span>
+                    </a>
+                </div>
+                <!-- Content -->
+            </mdb-card>
+        </div>
+    </div>
+</div>
