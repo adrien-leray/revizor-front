@@ -20,6 +20,10 @@ export class CourseSheetService {
     return this.courses;
   }
 
+  getMyList(id: string): CourseSheet[] {
+    return this.courses.filter((course: CourseSheet) => course.author === id);
+  }
+
   getById(id: string): CourseSheet {
     return this.courses.find((course: CourseSheet) => course.id === id);
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseSheet } from '../shared/models/course-sheet';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +8,9 @@ import { CourseSheet } from '../shared/models/course-sheet';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    this.router.navigate(['market']);
   }
-
 }
