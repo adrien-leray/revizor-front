@@ -7,14 +7,17 @@ import { SessionService } from '../shared/services/session.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-sheet-editor',
+  templateUrl: './sheet-editor.component.html',
+  styleUrls: ['./sheet-editor.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class SheetEditorComponent implements OnInit {
 
   courses: CourseSheet[] = [];
   user: User = null;
+  isConnected: boolean = false;
+  onEdit = false;
+  editedItem: CourseSheet = null;
 
   constructor(private courseSheetService: CourseSheetService, private sessionService: SessionService, private router: Router) { }
 
@@ -22,13 +25,17 @@ export class ProfileComponent implements OnInit {
     const session: Session = this.sessionService.getSession();
     if (session) {
       this.user = session.user;
+      this.isConnected = true;
     }
     this.sessionService.watchSessionChanges()
       .subscribe((session: Session) => {
         if (session) {
           this.user = session.user;
+          this.isConnected = true;
         } else {
           this.user = null;
+          this.editedItem = null;
+          this.isConnected = false;
           this.router.navigate(['/market']);
         }
       });
@@ -36,15 +43,22 @@ export class ProfileComponent implements OnInit {
   }
 
   downloadSheet(sheet: CourseSheet): void {
-    // this.courseSheetService.downloadSheet(sheet.id);
-  }
-
-  editSheet(sheet: CourseSheet): void {
-
+    this.courseSheetService.downloadSheet(sheet);
   }
 
   removeSheet(sheet: CourseSheet): void {
-
+    this.editedItem = null;
+    this.onEdit = false;
+    this.courseSheetService.removeCourse(sheet);
   }
 
+  activateEditMode(course: CourseSheet): void {
+    this.editedItem = course;
+    this.onEdit = true;
+  }
+
+  deactivateEditMode(): void {
+    this.onEdit = false;
+    this.editedItem = null;
+  }
 }

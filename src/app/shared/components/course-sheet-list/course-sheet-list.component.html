@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <!-- #region course-sheet item list -->
         <section [ngClass]="{'col-12': !onEdit, 'col-lg-8 col-md-12': onEdit}">
@@ -15,22 +15,10 @@
                             </div>
                         </div>
                         <div>
-                            <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="activateEditMode(course)" *ngIf="!onEdit">
+                            <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="activateEditMode(course)">
                                 <mdb-icon fas icon="shopping-cart" class="left"></mdb-icon>
                                 Buy for
                                 <span class="font-weight-bold">{{ course.price }}$</span>
-                            </button>
-                            <button type="button" mdbBtn color="info" outline="true" mdbWavesEffect (click)="activateEditMode(course)" *ngIf="!onEdit && isConnected">
-                                <mdb-icon far icon="edit" class="left"></mdb-icon>
-                                Edit
-                            </button>
-                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="removeItem(course)" *ngIf="!onEdit && isConnected">
-                                <mdb-icon far icon="trash-alt"></mdb-icon>
-                                Delete
-                            </button>
-                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="deactivateEditMode()" *ngIf="onEdit && isConnected && course.id === editedItem.id">
-                                <mdb-icon fas icon="ban" class="left"></mdb-icon>
-                                Cancel
                             </button>
                         </div>
                     </div>
@@ -38,11 +26,5 @@
             </div>
         </section>
         <!-- #endregion -->
-
-        <!--#region course-item edit form -->
-        <section class="col-lg-4 col-md-12" *ngIf="onEdit">
-            <app-course-sheet-form [courseSheet]="editedItem"></app-course-sheet-form>
-        </section>
-        <!--#endregion-->
     </div>
 </div>

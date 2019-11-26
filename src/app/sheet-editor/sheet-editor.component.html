@@ -1,6 +1,7 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12">
+        <!--#region courses sheet table -->
+        <section class="col-12 mb-3">
             <mdb-card>
                 <mdb-card-body>
                     <table mdbTable>
@@ -25,22 +26,30 @@
                                 <td>{{course.name}}</td>
                                 <td>{{course.category}}</td>
                                 <td>{{course.author}}</td>
-                                <td>{{course.postDate}}</td>
-                                <td>{{course.updateDate}}</td>
-                                <td>{{course.downloadDate}}</td>
+                                <td>{{course.postDate | date: 'medium'}}</td>
+                                <td>{{course.updateDate | date: 'medium'}}</td>
+                                <td>{{course.downloadDate | date: 'medium'}}</td>
                                 <td>{{course.price}}</td>
                                 <td>
-                                    <button type="button" size="sm" mdbBtn color="info" mdbWavesEffect (click)="downloadSheet(course)">
+                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="info" mdbWavesEffect
+                                        (click)="downloadSheet(course)">
                                         <mdb-icon fas icon="file-download"></mdb-icon>
                                         download
                                     </button>
-                                    <button type="button" size="sm" mdbBtn color="primary" mdbWavesEffect (click)="editSheet(course)">
+                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="primary" mdbWavesEffect
+                                        (click)="activateEditMode(course)">
                                         <mdb-icon far icon="edit"></mdb-icon>
                                         edit
                                     </button>
-                                    <button type="button" size="sm" mdbBtn color="danger" mdbWavesEffect (click)="removeSheet(course)">
+                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="danger" mdbWavesEffect
+                                        (click)="removeSheet(course)">
                                         <mdb-icon far icon="trash-alt"></mdb-icon>
                                         delete
+                                    </button>
+                                    <button *ngIf="onEdit && isConnected && course.id === editedItem.id" type="button" size="sm" mdbBtn color="danger" mdbWavesEffect
+                                        (click)="deactivateEditMode()">
+                                        <mdb-icon fas icon="ban" class="left"></mdb-icon>
+                                        cancel
                                     </button>
                                 </td>
                             </tr>
@@ -48,6 +57,12 @@
                     </table>
                 </mdb-card-body>
             </mdb-card>
-        </div>
+        </section>
+        <!--#endregion-->
+        <!--#region course-item edit form -->
+        <section class="col-4" *ngIf="onEdit">
+            <app-course-sheet-form [courseSheet]="editedItem" (onCancel)="deactivateEditMode()"></app-course-sheet-form>
+        </section>
+        <!--#endregion-->
     </div>
 </div>

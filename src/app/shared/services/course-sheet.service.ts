@@ -46,4 +46,8 @@ export class CourseSheetService {
       this.courses.splice(index, 1);
     }
   }
+
+  downloadSheet(course: CourseSheet): void {
+    console.log("téléchargement de la fiche... " + course.name);
+  }
 }

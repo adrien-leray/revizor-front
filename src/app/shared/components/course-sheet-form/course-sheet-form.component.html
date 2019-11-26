@@ -26,7 +26,14 @@
                 <input mdbFileSelect type="file">
             </div>
             <div class="d-flex justify-content-end">
-                <a type="submit" mdbBtn color="primary" mdbWavesEffect>Save</a>
+                <a mdbBtn color="primary" mdbWavesEffect (click)="onSubmit()">
+                    <mdb-icon far icon="save" class="left"></mdb-icon>
+                    Save
+                </a>
+                <button type="button" mdbBtn color="danger" mdbWavesEffect (click)="cancelEditMode()">
+                    <mdb-icon fas icon="ban" class="left"></mdb-icon>
+                    cancel
+                </button>
             </div>
         </form>
 

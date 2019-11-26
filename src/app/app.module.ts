@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MarketPlaceComponent } from './market-place/market-place.component';
-import { ProfileComponent } from './profile/profile.component';
+import { SheetEditorComponent } from './sheet-editor/sheet-editor.component';
 import { RegisterComponent } from './register/register.component';
 import { CourseSheetFormComponent } from './shared/components/course-sheet-form/course-sheet-form.component';
 import { CourseSheetListComponent } from './shared/components/course-sheet-list/course-sheet-list.component';
@@ -19,7 +19,7 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
     AppComponent,
     HomeComponent,
     MarketPlaceComponent,
-    ProfileComponent,
+    SheetEditorComponent,
     LoginComponent,
     RegisterComponent,
     NavbarComponent,

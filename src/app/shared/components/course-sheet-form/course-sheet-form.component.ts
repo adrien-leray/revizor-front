@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CourseSheet } from '../../models/course-sheet';
+import { CourseSheetService } from '../../services/course-sheet.service';
 
 @Component({
   selector: 'app-course-sheet-form',
@@ -10,9 +11,24 @@ import { CourseSheet } from '../../models/course-sheet';
 export class CourseSheetFormComponent implements OnInit {
 
   form: FormGroup = null;
-  @Input() courseSheet: CourseSheet = null;
 
-  constructor(private fb: FormBuilder) { }
+  private _courseSheet = null;
+
+  get courseSheet(): CourseSheet {
+    return this._courseSheet;
+  }
+
+  @Input()
+  set courseSheet(courseSheet: CourseSheet) {
+    this._courseSheet = courseSheet;
+    if (this.form) {
+      this.form.patchValue(courseSheet);
+    }
+  }
+
+  @Output('onCancel') onCancelEventEmitter = new EventEmitter<void>();
+
+  constructor(private fb: FormBuilder, private courseSheetService: CourseSheetService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -22,6 +38,21 @@ export class CourseSheetFormComponent implements OnInit {
       author: [this.courseSheet ? this.courseSheet.author : '', [Validators.required]],
       price: [this.courseSheet ? this.courseSheet.price : '', [Validators.required]]
     });
+  }
+
+  cancelEditMode() {
+    this.onCancelEventEmitter.emit();
+  }
+
+  onSubmit(): void {
+    const formValue: any = this.form.value;
+    const courseSheet: CourseSheet = new CourseSheet(formValue.name, formValue.image, formValue.category, formValue.author, formValue.price);
+    courseSheet.updateDate = new Date();
+    courseSheet.postDate = new Date();
+    console.log(courseSheet);
+    this.courseSheetService.updateCourse(courseSheet);
+    // close edit mode
+    this.cancelEditMode();
   }
 
 }
