@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { CourseSheet } from '../models/course-sheet';
 
 export const COURSES_SHEET_STUB: CourseSheet[] = [
-  new CourseSheet('Angular course', "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/220px-Angular_full_color_logo.svg.png", "Programming", "Prof X", new Date(), new Date(), 100),
-  new CourseSheet('Python course', "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/768px-Python-logo-notext.svg.png", "Programming", "Prof X", new Date(), new Date(), 100),
-  new CourseSheet('C++ course', "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png", "Programming", "Prof X", new Date(), new Date(), 100),
+  new CourseSheet('Angular course', "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/220px-Angular_full_color_logo.svg.png", "Programming", "Prof X", 100),
+  new CourseSheet('Python course', "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/768px-Python-logo-notext.svg.png", "Programming", "Prof X", 100),
+  new CourseSheet('C++ course', "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png", "Programming", "Prof X", 100),
+  new CourseSheet('C++ course', "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png", "Programming", "admin", 100),
+  new CourseSheet('Fluter course', "https://lh3.googleusercontent.com/F5B6GGdo6tAVNApr2X2p35igQhYBouuPA3uuIu3LEPHsIl7JPMHA1sn4-5J2B78JWA=s180", "Programming", "admin", 100),
 ];
 
 @Injectable({

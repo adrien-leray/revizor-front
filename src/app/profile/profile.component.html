@@ -10,22 +10,39 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Author</th>
-                                <th scope="col">Post date</th>
-                                <th scope="col">Update date</th>
+                                <th scope="col">Last post date</th>
+                                <th scope="col">Last update date</th>
+                                <th scope="col">Last download date</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr mdbTableCol *ngFor="let course of courses">
                                 <th scope="row">
-                                    <img [src]="course.image" width="64" height="64">
+                                    <img [src]="course.image" width="32" height="32">
                                 </th>
                                 <td>{{course.name}}</td>
                                 <td>{{course.category}}</td>
                                 <td>{{course.author}}</td>
                                 <td>{{course.postDate}}</td>
                                 <td>{{course.updateDate}}</td>
+                                <td>{{course.downloadDate}}</td>
                                 <td>{{course.price}}</td>
+                                <td>
+                                    <button type="button" size="sm" mdbBtn color="info" mdbWavesEffect (click)="downloadSheet(course)">
+                                        <mdb-icon fas icon="file-download"></mdb-icon>
+                                        download
+                                    </button>
+                                    <button type="button" size="sm" mdbBtn color="primary" mdbWavesEffect (click)="editSheet(course)">
+                                        <mdb-icon far icon="edit"></mdb-icon>
+                                        edit
+                                    </button>
+                                    <button type="button" size="sm" mdbBtn color="danger" mdbWavesEffect (click)="removeSheet(course)">
+                                        <mdb-icon far icon="trash-alt"></mdb-icon>
+                                        delete
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

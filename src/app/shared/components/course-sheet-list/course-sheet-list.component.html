@@ -20,15 +20,15 @@
                                 Buy for
                                 <span class="font-weight-bold">{{ course.price }}$</span>
                             </button>
-                            <button type="button" mdbBtn color="info" outline="true" mdbWavesEffect (click)="activateEditMode(course)" *ngIf="!onEdit">
+                            <button type="button" mdbBtn color="info" outline="true" mdbWavesEffect (click)="activateEditMode(course)" *ngIf="!onEdit && isConnected">
                                 <mdb-icon far icon="edit" class="left"></mdb-icon>
                                 Edit
                             </button>
-                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="removeItem(course)" *ngIf="!onEdit">
+                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="removeItem(course)" *ngIf="!onEdit && isConnected">
                                 <mdb-icon far icon="trash-alt"></mdb-icon>
                                 Delete
                             </button>
-                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="deactivateEditMode()" *ngIf="onEdit && course.id === editedItem.id">
+                            <button type="button" mdbBtn color="danger" outline="true" mdbWavesEffect (click)="deactivateEditMode()" *ngIf="onEdit && isConnected && course.id === editedItem.id">
                                 <mdb-icon fas icon="ban" class="left"></mdb-icon>
                                 Cancel
                             </button>

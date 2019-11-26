@@ -5,10 +5,11 @@
     <links>
         <div class="navbar-nav mr-auto">
             <a class="nav-item nav-link waves-light" routerLink="/market" mdbWavesEffect>Marketplace</a>
-            <a class="nav-item nav-link waves-light" routerLink="/profile" mdbWavesEffect>Mes fiches</a>
+            <a class="nav-item nav-link waves-light" routerLink="/profile" mdbWavesEffect *ngIf="isConnected">My sheets</a>
         </div>
         <div class="navbar-nav">
-            <button type="button" routerLink="/login" mdbBtn color="deep-orange" size="sm" mdbWavesEffect>CONNEXION</button>
+            <button type="button" *ngIf="!isConnected" routerLink="/login" mdbBtn color="deep-orange" size="sm" mdbWavesEffect>SIGN IN</button>
+            <button type="button" *ngIf="isConnected" mdbBtn color="danger" size="sm" mdbWavesEffect (click)="logout()">LOGOUT</button>
         </div>
     </links>
 </mdb-navbar>
