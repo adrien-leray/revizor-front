@@ -3,24 +3,20 @@
         <!-- #region course-sheet item list -->
         <section [ngClass]="{'col-12': !onEdit, 'col-lg-8 col-md-12': onEdit}">
             <div class="d-flex flex-column">
-                <mdb-card *ngFor="let course of courses" class="card-image course mb-3 mr-3">
-                    <div class="d-flex align-items-center justify-content-between py-3 px-4">
-                        <div class="d-flex">
-                            <img [src]="course.image" width="64" height="64" class="mr-5">
+                <mdb-card *ngFor="let course of courses" class="card-image course">
+                    <div class="course-content">
+                        <div class="course-header">
+                            <img [src]="course.image" width="64" height="64">
                             <div>
-                                <span class="orange-text">
-                                    {{ course.category }}
-                                </span>
-                                <h4 class="card-title pt-2"><strong>{{ course.name }}</strong></h4>
+                                <p class="title">{{ course.name }}</p>
+                                <p class="category"><span class="orange-text">{{ course.category }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{course.postDate | date: 'mediumDate'}}</p>
+                                <p class="price">{{ course.price | number: '1.2-2' }}<span class="devise">€</span></p>
                             </div>
                         </div>
-                        <div>
-                            <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="activateEditMode(course)">
-                                <mdb-icon fas icon="shopping-cart" class="left"></mdb-icon>
-                                Buy for
-                                <span class="font-weight-bold">{{ course.price }}$</span>
-                            </button>
-                        </div>
+                        <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="activateEditMode(course)">
+                            <mdb-icon fas icon="shopping-cart" class="left"></mdb-icon>
+                            Buy
+                        </button>
                     </div>
                 </mdb-card>
             </div>
