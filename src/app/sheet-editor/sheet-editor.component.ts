@@ -7,6 +7,7 @@ import { Session } from '../shared/models/session';
 import { User } from '../shared/models/user';
 import { CourseSheetService } from '../shared/services/course-sheet.service';
 import { SessionService } from '../shared/services/session.service';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sheet-editor',
@@ -18,7 +19,7 @@ export class SheetEditorComponent implements OnInit {
   @ViewChild('courseSheet', {static: false})
   courseSheet: ElementRef;
 
-  courses: CourseSheet[] = [];
+  courses: Observable<CourseSheet[]> = of([]);
   user: User = null;
   isConnected: boolean = false;
   onEdit = false;

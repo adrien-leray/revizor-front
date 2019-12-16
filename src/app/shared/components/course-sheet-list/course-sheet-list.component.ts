@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StripeCheckoutLoader, StripeCheckoutHandler } from 'ng-stripe-checkout';  
+import { StripeCheckoutHandler, StripeCheckoutLoader } from 'ng-stripe-checkout';
 
 import { CourseSheet } from '../../models/course-sheet';
 
@@ -27,7 +27,7 @@ export class CourseSheetListComponent implements OnInit {
       }
     }).then((handler: StripeCheckoutHandler) => {
       this.stripeCheckoutHandler = handler;
-    })
+    });
   }
 
   public onClickBuy(course: CourseSheet) {

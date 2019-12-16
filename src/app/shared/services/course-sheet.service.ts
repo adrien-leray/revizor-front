@@ -1,7 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 import { CourseSheet } from '../models/course-sheet';
+import { SessionService } from './session.service';
 
 export const COURSES_SHEET_STUB: CourseSheet[] = [
   new CourseSheet('Angular course', "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/220px-Angular_full_color_logo.svg.png", "Programming", "Prof X", 100),
@@ -16,37 +20,44 @@ export const COURSES_SHEET_STUB: CourseSheet[] = [
 })
 export class CourseSheetService {
 
-  courses: CourseSheet[] = COURSES_SHEET_STUB;
+  courses: CourseSheet[] = [];
 
-  constructor() { }
+  constructor(private http: HttpClient, private sessionService: SessionService) { }
 
-  getAll(): CourseSheet[] {
-    return this.courses;
+  getAll(): Observable<CourseSheet[]> {
+    return this.http.get<CourseSheet[]>(`${environment.apiUrl}api/v1/fiches`, {})
+      .pipe(map(sheets => {
+        sheets.map(sheet => sheet.image = environment.apiUrl + sheet.image);
+        return sheets;
+      }));
   }
 
-  getMyList(id: string): CourseSheet[] {
-    return this.courses.filter((course: CourseSheet) => course.author === id);
+  getMyList(id: string): Observable<CourseSheet[]> {
+    return this.http.get<CourseSheet[]>(`${environment.apiUrl}api/v1/fiches`, {})
+      .pipe(map(sheets => sheets.filter(sheet => sheet.author === id)));
   }
 
-  getById(id: string): CourseSheet {
-    return this.courses.find((course: CourseSheet) => course.id === id);
+  getById(id: string): Observable<CourseSheet> {
+    return this.http.get<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${id}`, {})
+      .pipe(map(sheet => {
+        sheet.image = environment.apiUrl + sheet.image;
+        return sheet;
+      }));
   }
 
-  createCourse(course: CourseSheet): CourseSheet {
-    this.courses.push(course);
-    return this.getById(course.id);
+  createCourse(sheet: CourseSheet): Observable<CourseSheet> {
+    const token: string = this.sessionService.getSession().token;
+    return this.http.post<CourseSheet>(`${environment.apiUrl}api/v1/fiches`, sheet, { headers: { token }});
   }
 
-  updateCourse(course: CourseSheet): CourseSheet {
-    this.courses[course.id] = course;
-    return this.courses[course.id];
+  updateCourse(sheet: CourseSheet): Observable<CourseSheet> {
+    const token: string = this.sessionService.getSession().token;
+    return this.http.put<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, sheet, { headers: { token }});
   }
 
-  removeCourse(course: CourseSheet): void {
-    const index: number = this.courses.indexOf(course);
-    if (index !== -1) {
-      this.courses.splice(index, 1);
-    }
+  removeCourse(sheet: CourseSheet): Observable<CourseSheet> {
+    const token: string = this.sessionService.getSession().token;
+    return this.http.delete<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, { headers: { token }});
   }
 
   exportSheet(sheet: CourseSheet): void {
