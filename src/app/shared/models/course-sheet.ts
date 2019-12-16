@@ -19,4 +19,16 @@ export class CourseSheet {
         this.author = author;
         this.price = price;
     }
+
+    toDto(): any {
+        return {
+            name: this.name,
+            category: this.category,
+            author: this.author,
+            publication_date: this.postDate,
+            updateDate: this.updateDate,
+            price: this.price,
+            image: this.image
+        }
+    }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseSheet } from '../shared/models/course-sheet';
 import { CourseSheetService } from '../shared/services/course-sheet.service';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-market-place',
@@ -9,7 +10,7 @@ import { CourseSheetService } from '../shared/services/course-sheet.service';
 })
 export class MarketPlaceComponent implements OnInit {
 
-  courses: CourseSheet[] = [];
+  courses: Observable<CourseSheet[]> = of([]);
 
   constructor(private courseSheetService: CourseSheetService) { }
 

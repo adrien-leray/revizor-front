@@ -7,6 +7,7 @@ import { Session } from '../shared/models/session';
 import { User } from '../shared/models/user';
 import { CourseSheetService } from '../shared/services/course-sheet.service';
 import { SessionService } from '../shared/services/session.service';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sheet-editor',
@@ -15,13 +16,15 @@ import { SessionService } from '../shared/services/session.service';
 })
 export class SheetEditorComponent implements OnInit {
 
-  @ViewChild('courseSheet', {static: false})
+  @ViewChild('courseSheet', { static: false })
   courseSheet: ElementRef;
 
-  courses: CourseSheet[] = [];
+  courses: Observable<CourseSheet[]> = of([]);
   user: User = null;
   isConnected: boolean = false;
   onEdit = false;
+  onAdd = false;
+  editionMod: string = null;
   sheet: CourseSheet = null;
 
   constructor(private courseSheetService: CourseSheetService, private sessionService: SessionService, private router: Router) { }
@@ -51,7 +54,7 @@ export class SheetEditorComponent implements OnInit {
     const img = new Image();
     img.src = logo_url;
     img.onload = () => {
-        callback(img);
+      callback(img);
     };
   }
 
@@ -82,11 +85,20 @@ export class SheetEditorComponent implements OnInit {
   }
 
   activateEditMode(course: CourseSheet): void {
-    this.sheet = course;
-    this.onEdit = true;
+    if (course) {
+      this.sheet = course;
+      this.onEdit = true;
+      this.editionMod = 'Edit';
+    } else {
+      this.onEdit = false;
+      this.onAdd = true;
+      this.editionMod = 'Add';
+    }
+    console.log(course, this.onEdit, this.onAdd);
   }
 
   deactivateEditMode(): void {
+    this.onAdd = false;
     this.onEdit = false;
     this.sheet = null;
   }
