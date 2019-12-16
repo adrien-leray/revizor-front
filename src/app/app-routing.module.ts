@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { SheetEditorComponent } from './sheet-editor/sheet-editor.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
     children : [
       { path: 'market', component: MarketPlaceComponent },
       { path: 'editor', component: SheetEditorComponent },
+      { path: 'transaction', component: TransactionListComponent },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent }
     ]

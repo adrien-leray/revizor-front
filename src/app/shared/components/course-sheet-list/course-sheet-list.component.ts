@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { StripeCheckoutHandler, StripeCheckoutLoader } from 'ng-stripe-checkout';
 
 import { CourseSheet } from '../../models/course-sheet';
+import { Transaction } from '../../models/transaction';
+import { TransactionService } from '../../services/transaction.service';
+
 
 @Component({
   selector: 'app-course-sheet-list',
@@ -13,7 +16,7 @@ export class CourseSheetListComponent implements OnInit {
   @Input() courses: CourseSheet[] = [];
   private stripeCheckoutHandler: StripeCheckoutHandler;
 
-  constructor(private stripeCheckoutLoader: StripeCheckoutLoader) { }
+  constructor(private transactionService: TransactionService, private stripeCheckoutLoader: StripeCheckoutLoader) { }
 
   ngOnInit() {
 
@@ -39,6 +42,12 @@ export class CourseSheetListComponent implements OnInit {
       locale: 'FR',
 
     }).then((token) => {
+      //Enregistrement de la transaction
+      let transaction = new Transaction(parseInt(course.id));
+      this.transactionService.createTransaction(transaction).subscribe(
+        (test) => {},
+        (err) => {console.log(err, 'erreur lors de saugarde transaction')}
+      );
       console.log('Payment successful!', token);
     }).catch((err) => {
       if (err !== 'stripe_closed') {
