@@ -36,8 +36,8 @@
                                         <mdb-icon fas icon="file-download"></mdb-icon>
                                         download
                                     </button>
-                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="primary" mdbWavesEffect
-                                        (click)="activateEditMode(course)">
+                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="primary"
+                                        mdbWavesEffect (click)="activateEditMode(course)">
                                         <mdb-icon far icon="edit"></mdb-icon>
                                         edit
                                     </button>
@@ -46,8 +46,8 @@
                                         <mdb-icon far icon="trash-alt"></mdb-icon>
                                         delete
                                     </button>
-                                    <button *ngIf="onEdit && isConnected && course.id === editedItem.id" type="button" size="sm" mdbBtn color="danger" mdbWavesEffect
-                                        (click)="deactivateEditMode()">
+                                    <button *ngIf="onEdit && isConnected && course.id === sheet.id" type="button"
+                                        size="sm" mdbBtn color="danger" mdbWavesEffect (click)="deactivateEditMode()">
                                         <mdb-icon fas icon="ban" class="left"></mdb-icon>
                                         cancel
                                     </button>
@@ -60,9 +60,21 @@
         </section>
         <!--#endregion-->
         <!--#region course-item edit form -->
-        <section class="col-4" *ngIf="onEdit">
-            <app-course-sheet-form [courseSheet]="editedItem" (onCancel)="deactivateEditMode()"></app-course-sheet-form>
+        <section class="col-12 col-md-6" *ngIf="onEdit">
+            <app-course-sheet-form [courseSheet]="sheet" (onCancel)="deactivateEditMode()"></app-course-sheet-form>
         </section>
         <!--#endregion-->
+
+        <section #courseSheet>
+            <h2>Fiche: {{ sheet?.name | uppercase }}</h2>
+            <img [src]="sheet?.image" alt="sheet logo" width="64" height="64">
+            <ul>
+                <li>Catégorie: {{sheet?.category}}</li>
+                <li>Auteur: {{sheet?.author}}</li>
+                <li>Date de publication: {{sheet?.postDate}}</li>
+                <li>Date de la dernière mise à jour: {{sheet?.updateDate}}</li>
+                <li>Tarif: {{sheet?.price}}</li>
+            </ul>
+        </section>
     </div>
 </div>

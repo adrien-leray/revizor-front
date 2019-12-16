@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CourseSheet } from '../shared/models/course-sheet';
-import { CourseSheetService } from '../shared/services/course-sheet.service';
-import { User } from '../shared/models/user';
-import { Session } from '../shared/models/session';
-import { SessionService } from '../shared/services/session.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import * as jsPDF from 'jspdf';
+
+import { CourseSheet } from '../shared/models/course-sheet';
+import { Session } from '../shared/models/session';
+import { User } from '../shared/models/user';
+import { CourseSheetService } from '../shared/services/course-sheet.service';
+import { SessionService } from '../shared/services/session.service';
 
 @Component({
   selector: 'app-sheet-editor',
@@ -13,11 +15,14 @@ import { Router } from '@angular/router';
 })
 export class SheetEditorComponent implements OnInit {
 
+  @ViewChild('courseSheet', {static: false})
+  courseSheet: ElementRef;
+
   courses: CourseSheet[] = [];
   user: User = null;
   isConnected: boolean = false;
   onEdit = false;
-  editedItem: CourseSheet = null;
+  sheet: CourseSheet = null;
 
   constructor(private courseSheetService: CourseSheetService, private sessionService: SessionService, private router: Router) { }
 
@@ -34,7 +39,7 @@ export class SheetEditorComponent implements OnInit {
           this.isConnected = true;
         } else {
           this.user = null;
-          this.editedItem = null;
+          this.sheet = null;
           this.isConnected = false;
           this.router.navigate(['/market']);
         }
@@ -43,22 +48,44 @@ export class SheetEditorComponent implements OnInit {
   }
 
   downloadSheet(sheet: CourseSheet): void {
-    this.courseSheetService.downloadSheet(sheet);
+    this.sheet = sheet;
+    const doc = new jsPDF();
+    const template = this.courseSheet.nativeElement.innerHTML;
+    doc.fromHTML(template, 15, 15, { width: 190 });
+    doc.save(`${sheet.name.split(' ').join('-').toLowerCase()}-${this.formatDate(sheet.postDate)}.pdf`);
+
   }
 
   removeSheet(sheet: CourseSheet): void {
-    this.editedItem = null;
+    this.sheet = null;
     this.onEdit = false;
     this.courseSheetService.removeCourse(sheet);
   }
 
   activateEditMode(course: CourseSheet): void {
-    this.editedItem = course;
+    this.sheet = course;
     this.onEdit = true;
   }
 
   deactivateEditMode(): void {
     this.onEdit = false;
-    this.editedItem = null;
+    this.sheet = null;
+  }
+
+  formatDate(date: Date) {
+    let d = date;
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
   }
 }

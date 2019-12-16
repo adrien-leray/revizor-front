@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { CourseSheet } from '../models/course-sheet';
 
 export const COURSES_SHEET_STUB: CourseSheet[] = [
@@ -47,7 +49,70 @@ export class CourseSheetService {
     }
   }
 
-  downloadSheet(course: CourseSheet): void {
-    console.log("téléchargement de la fiche... " + course.name);
+  exportSheet(sheet: CourseSheet): void {
+    const markdownContent = `
+      ![Image de la fiche](${sheet.image} "Image de la fiche")
+
+      ## INFOS 
+      
+      __Nom:__ ${sheet.name}
+
+      __Catégorie:__ ${sheet.category}
+
+      __Auteur:__ ${sheet.author}
+
+      __Date de publication:__ ${sheet.postDate}
+
+      __Date de la dernière mise-à-jour:__ ${sheet.updateDate}
+
+      __Tarif:__ ${sheet.price}€
+    `;
+
+    this.downloadFile(markdownContent, `${sheet.name.split(' ').join('-').toLowerCase()}-${this.formatDate(sheet.postDate)}.pdf`, 'application/pdf');
+  }
+
+  downloadFile(data, filename, type): void {
+    let file = new Blob([this.str2ab(data)], { type });
+
+    if (window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(file, filename);
+    } else { // Others
+      const a = document.createElement('a');
+      const url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+    }
+  }
+
+  formatDate(date: Date) {
+    let d = date;
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
+  }
+
+  str2ab(str) {
+    var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
+    var bufView = new Uint16Array(buf);
+    for (var i=0, strLen=str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
   }
 }
