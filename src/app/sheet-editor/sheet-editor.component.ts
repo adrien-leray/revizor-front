@@ -16,13 +16,15 @@ import { of, Observable } from 'rxjs';
 })
 export class SheetEditorComponent implements OnInit {
 
-  @ViewChild('courseSheet', {static: false})
+  @ViewChild('courseSheet', { static: false })
   courseSheet: ElementRef;
 
   courses: Observable<CourseSheet[]> = of([]);
   user: User = null;
   isConnected: boolean = false;
   onEdit = false;
+  onAdd = false;
+  editionMod: string = null;
   sheet: CourseSheet = null;
 
   constructor(private courseSheetService: CourseSheetService, private sessionService: SessionService, private router: Router) { }
@@ -52,7 +54,7 @@ export class SheetEditorComponent implements OnInit {
     const img = new Image();
     img.src = logo_url;
     img.onload = () => {
-        callback(img);
+      callback(img);
     };
   }
 
@@ -83,11 +85,19 @@ export class SheetEditorComponent implements OnInit {
   }
 
   activateEditMode(course: CourseSheet): void {
-    this.sheet = course;
-    this.onEdit = true;
+    if (course) {
+      this.sheet = course;
+      this.onEdit = true;
+      this.editionMod = 'Edit';
+    } else {
+      this.onEdit = false;
+      this.onAdd = true;
+      this.editionMod = 'Add';
+    }
   }
 
   deactivateEditMode(): void {
+    this.onAdd = false;
     this.onEdit = false;
     this.sheet = null;
   }

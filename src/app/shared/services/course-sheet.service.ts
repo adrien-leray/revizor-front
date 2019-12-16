@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -47,17 +47,23 @@ export class CourseSheetService {
 
   createCourse(sheet: CourseSheet): Observable<CourseSheet> {
     const token: string = this.sessionService.getSession().token;
-    return this.http.post<CourseSheet>(`${environment.apiUrl}api/v1/fiches`, sheet, { headers: { token }});
+    const headers: HttpHeaders = new HttpHeaders();
+    headers.append('token', token);
+    return this.http.post<CourseSheet>(`${environment.apiUrl}api/v1/fiches`, sheet.toDto(), { headers });
   }
 
   updateCourse(sheet: CourseSheet): Observable<CourseSheet> {
     const token: string = this.sessionService.getSession().token;
-    return this.http.put<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, sheet, { headers: { token }});
+    const headers: HttpHeaders = new HttpHeaders();
+    headers.append('token', token);
+    return this.http.put<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, sheet.toDto(), { headers });
   }
 
   removeCourse(sheet: CourseSheet): Observable<CourseSheet> {
     const token: string = this.sessionService.getSession().token;
-    return this.http.delete<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, { headers: { token }});
+    const headers: HttpHeaders = new HttpHeaders();
+    headers.append('token', token);
+    return this.http.delete<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, { headers });
   }
 
   exportSheet(sheet: CourseSheet): void {

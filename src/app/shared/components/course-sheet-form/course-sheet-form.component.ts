@@ -12,6 +12,9 @@ export class CourseSheetFormComponent implements OnInit {
 
   form: FormGroup = null;
 
+  @Input()
+  editionMod: string = null;
+
   private _courseSheet = null;
 
   get courseSheet(): CourseSheet {
@@ -46,11 +49,18 @@ export class CourseSheetFormComponent implements OnInit {
 
   onSubmit(): void {
     const formValue: any = this.form.value;
-    const courseSheet: CourseSheet = new CourseSheet(formValue.name, formValue.image, formValue.category, formValue.author, formValue.price);
+    const courseSheet: CourseSheet
+      = new CourseSheet(formValue.name, formValue.image, formValue.category, formValue.author, formValue.price);
     courseSheet.updateDate = new Date();
     courseSheet.postDate = new Date();
     console.log(courseSheet);
-    this.courseSheetService.updateCourse(courseSheet);
+
+    if (this.editionMod.localeCompare('Edit')) {
+      this.courseSheetService.updateCourse(courseSheet).subscribe();
+    } else {
+      this.courseSheetService.createCourse(courseSheet).subscribe();
+    }
+
     // close edit mode
     this.cancelEditMode();
   }

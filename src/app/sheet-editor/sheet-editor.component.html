@@ -2,6 +2,7 @@
     <div class="row">
         <!--#region courses sheet table -->
         <section class="col-12 mb-3">
+            <button mdbBtn type="button" color="deep-orange" mdbWavesEffect (click)="activateEditMode(null)"><mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Add Sheet</button>
             <mdb-card>
                 <mdb-card-body class="overflow-x-scroll">
                     <table mdbTable>
@@ -60,8 +61,8 @@
         </section>
         <!--#endregion-->
         <!--#region course-item edit form -->
-        <section class="col-12 col-md-6" *ngIf="onEdit">
-            <app-course-sheet-form [courseSheet]="sheet" (onCancel)="deactivateEditMode()"></app-course-sheet-form>
+        <section class="col-12 col-md-6" *ngIf="onEdit || onAdd">
+            <app-course-sheet-form [editionMod]="editionMod" [courseSheet]="sheet" (onCancel)="deactivateEditMode()"></app-course-sheet-form>
         </section>
         <!--#endregion-->
 
