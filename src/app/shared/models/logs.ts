@@ -6,4 +6,11 @@ export class Logs {
         this.mail = mail;
         this.password = password;
     }
+
+    public toDto(): any {
+        return {
+            email: this.mail,
+            password: this.password
+        };
+    }
 }

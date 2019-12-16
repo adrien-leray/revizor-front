@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const logs: Logs = this.loginForm.value as Logs;
+    const formValue: any = this.loginForm.value;
+    const logs: Logs =  new Logs(formValue.mail, formValue.password);
     this.authService.login(logs);
   }
 
