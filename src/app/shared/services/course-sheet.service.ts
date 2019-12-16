@@ -46,23 +46,25 @@ export class CourseSheetService {
   }
 
   createCourse(sheet: CourseSheet): Observable<CourseSheet> {
-    const token: string = this.sessionService.getSession().token;
+    console.log('ajout de cours');
+    const token: string = this.sessionService.getSession().accessToken;
     const headers: HttpHeaders = new HttpHeaders();
-    headers.append('token', token);
+    headers.append('Authorization', `Bearer ${token}`);
     return this.http.post<CourseSheet>(`${environment.apiUrl}api/v1/fiches`, sheet.toDto(), { headers });
   }
 
   updateCourse(sheet: CourseSheet): Observable<CourseSheet> {
-    const token: string = this.sessionService.getSession().token;
+    console.log('edition de cours');
+    const token: string = this.sessionService.getSession().accessToken;
     const headers: HttpHeaders = new HttpHeaders();
-    headers.append('token', token);
+    headers.append('Authorization', `Bearer ${token}`);
     return this.http.put<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, sheet.toDto(), { headers });
   }
 
   removeCourse(sheet: CourseSheet): Observable<CourseSheet> {
-    const token: string = this.sessionService.getSession().token;
+    const token: string = this.sessionService.getSession().accessToken;
     const headers: HttpHeaders = new HttpHeaders();
-    headers.append('token', token);
+    headers.append('Authorization', `Bearer ${token}`);
     return this.http.delete<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${sheet.id}`, { headers });
   }
 

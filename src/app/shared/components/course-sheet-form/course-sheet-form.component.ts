@@ -53,9 +53,8 @@ export class CourseSheetFormComponent implements OnInit {
       = new CourseSheet(formValue.name, formValue.image, formValue.category, formValue.author, formValue.price);
     courseSheet.updateDate = new Date();
     courseSheet.postDate = new Date();
-    console.log(courseSheet);
 
-    if (this.editionMod.localeCompare('Edit')) {
+    if (this.editionMod.localeCompare('Edit') !== -1) {
       this.courseSheetService.updateCourse(courseSheet).subscribe();
     } else {
       this.courseSheetService.createCourse(courseSheet).subscribe();

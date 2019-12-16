@@ -94,6 +94,7 @@ export class SheetEditorComponent implements OnInit {
       this.onAdd = true;
       this.editionMod = 'Add';
     }
+    console.log(course, this.onEdit, this.onAdd);
   }
 
   deactivateEditMode(): void {
