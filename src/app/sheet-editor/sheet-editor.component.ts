@@ -47,13 +47,32 @@ export class SheetEditorComponent implements OnInit {
     this.courses = this.courseSheetService.getMyList(this.user.name);
   }
 
+  getImgFromUrl(logo_url, callback) {
+    const img = new Image();
+    img.src = logo_url;
+    img.onload = () => {
+        callback(img);
+    };
+  }
+
   downloadSheet(sheet: CourseSheet): void {
     this.sheet = sheet;
-    const doc = new jsPDF();
-    const template = this.courseSheet.nativeElement.innerHTML;
-    doc.fromHTML(template, 15, 15, { width: 190 });
-    doc.save(`${sheet.name.split(' ').join('-').toLowerCase()}-${this.formatDate(sheet.postDate)}.pdf`);
+    this.getImgFromUrl(sheet.image, (img) => {
+      this.generatePDF(sheet, img);
+    });
+  }
 
+  generatePDF(sheet: CourseSheet, image: any) {
+    const sheetTemplate: any = this.courseSheet.nativeElement;
+
+    setTimeout(() => {
+      const doc = new jsPDF();
+      const template = sheetTemplate.innerHTML;
+      console.log(template);
+      doc.fromHTML(template, 15, 15, { width: 190 });
+      doc.addImage(image, 'image/png', 150, 20, 32, 32);
+      doc.save(`${sheet.name.split(' ').join('-').toLowerCase()}-${this.formatDate(sheet.postDate)}.pdf`);
+    }, 1000);
   }
 
   removeSheet(sheet: CourseSheet): void {
