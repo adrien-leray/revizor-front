@@ -13,7 +13,7 @@
                                 <p class="price">{{ course.price | number: '1.2-2' }}<span class="devise">€</span></p>
                             </div>
                         </div>
-                        <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="activateEditMode(course)">
+                        <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="onClickBuy(course)">
                             <mdb-icon fas icon="shopping-cart" class="left"></mdb-icon>
                             Buy
                         </button>

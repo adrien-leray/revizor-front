@@ -15,6 +15,7 @@ import { CourseSheetListComponent } from './shared/components/course-sheet-list/
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { SheetEditorComponent } from './sheet-editor/sheet-editor.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { StripeCheckoutModule } from 'ng-stripe-checkout';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     HttpClientModule,
+    StripeCheckoutModule,
     MarkdownModule.forRoot({ loader: HttpClient }),
   ],
   providers: [],
