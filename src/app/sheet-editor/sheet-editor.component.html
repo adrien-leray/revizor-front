@@ -65,15 +65,14 @@
         </section>
         <!--#endregion-->
 
-        <section #courseSheet>
+        <section [hidden]="true" #courseSheet>
             <h2>Fiche: {{ sheet?.name | uppercase }}</h2>
-            <img [src]="sheet?.image" alt="sheet logo" width="64" height="64">
             <ul>
                 <li>Catégorie: {{sheet?.category}}</li>
                 <li>Auteur: {{sheet?.author}}</li>
-                <li>Date de publication: {{sheet?.postDate}}</li>
-                <li>Date de la dernière mise à jour: {{sheet?.updateDate}}</li>
-                <li>Tarif: {{sheet?.price}}</li>
+                <li>Date de publication: {{sheet?.postDate | date: 'medium'}}</li>
+                <li>Date de la dernière mise à jour: {{sheet?.updateDate | date: 'medium'}}</li>
+                <li>Tarif: <b>{{sheet?.price}} euros</b></li>
             </ul>
         </section>
     </div>
