@@ -1,30 +1,40 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MarketPlaceComponent } from './market-place/market-place.component';
-import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
+import { CourseSheetFormComponent } from './shared/components/course-sheet-form/course-sheet-form.component';
+import { CourseSheetListComponent } from './shared/components/course-sheet-list/course-sheet-list.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { SheetEditorComponent } from './sheet-editor/sheet-editor.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MarketPlaceComponent,
-    ProfileComponent,
+    SheetEditorComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    CourseSheetListComponent,
+    CourseSheetFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    ReactiveFormsModule,
+    HttpClientModule,
+    MarkdownModule.forRoot({ loader: HttpClient }),
   ],
   providers: [],
   bootstrap: [AppComponent]

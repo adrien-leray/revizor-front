@@ -1,0 +1,91 @@
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
+import * as jsPDF from 'jspdf';
+
+import { CourseSheet } from '../shared/models/course-sheet';
+import { Session } from '../shared/models/session';
+import { User } from '../shared/models/user';
+import { CourseSheetService } from '../shared/services/course-sheet.service';
+import { SessionService } from '../shared/services/session.service';
+
+@Component({
+  selector: 'app-sheet-editor',
+  templateUrl: './sheet-editor.component.html',
+  styleUrls: ['./sheet-editor.component.scss']
+})
+export class SheetEditorComponent implements OnInit {
+
+  @ViewChild('courseSheet', {static: false})
+  courseSheet: ElementRef;
+
+  courses: CourseSheet[] = [];
+  user: User = null;
+  isConnected: boolean = false;
+  onEdit = false;
+  sheet: CourseSheet = null;
+
+  constructor(private courseSheetService: CourseSheetService, private sessionService: SessionService, private router: Router) { }
+
+  ngOnInit() {
+    const session: Session = this.sessionService.getSession();
+    if (session) {
+      this.user = session.user;
+      this.isConnected = true;
+    }
+    this.sessionService.watchSessionChanges()
+      .subscribe((session: Session) => {
+        if (session) {
+          this.user = session.user;
+          this.isConnected = true;
+        } else {
+          this.user = null;
+          this.sheet = null;
+          this.isConnected = false;
+          this.router.navigate(['/market']);
+        }
+      });
+    this.courses = this.courseSheetService.getMyList(this.user.name);
+  }
+
+  downloadSheet(sheet: CourseSheet): void {
+    this.sheet = sheet;
+    const doc = new jsPDF();
+    const template = this.courseSheet.nativeElement.innerHTML;
+    doc.fromHTML(template, 15, 15, { width: 190 });
+    doc.save(`${sheet.name.split(' ').join('-').toLowerCase()}-${this.formatDate(sheet.postDate)}.pdf`);
+
+  }
+
+  removeSheet(sheet: CourseSheet): void {
+    this.sheet = null;
+    this.onEdit = false;
+    this.courseSheetService.removeCourse(sheet);
+  }
+
+  activateEditMode(course: CourseSheet): void {
+    this.sheet = course;
+    this.onEdit = true;
+  }
+
+  deactivateEditMode(): void {
+    this.onEdit = false;
+    this.sheet = null;
+  }
+
+  formatDate(date: Date) {
+    let d = date;
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
+  }
+}

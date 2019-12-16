@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <!-- #region course-sheet item list -->
+        <section [ngClass]="{'col-12': !onEdit, 'col-lg-8 col-md-12': onEdit}">
+            <div class="d-flex flex-column">
+                <mdb-card *ngFor="let course of courses" class="card-image course">
+                    <div class="course-content">
+                        <div class="course-header">
+                            <img [src]="course.image" width="64" height="64">
+                            <div>
+                                <p class="title">{{ course.name }}</p>
+                                <p class="category"><span class="orange-text">{{ course.category }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{course.postDate | date: 'mediumDate'}}</p>
+                                <p class="price">{{ course.price | number: '1.2-2' }}<span class="devise">€</span></p>
+                            </div>
+                        </div>
+                        <button type="button" mdbBtn color="deep-orange" mdbWavesEffect (click)="activateEditMode(course)">
+                            <mdb-icon fas icon="shopping-cart" class="left"></mdb-icon>
+                            Buy
+                        </button>
+                    </div>
+                </mdb-card>
+            </div>
+        </section>
+        <!-- #endregion -->
+    </div>
+</div>
