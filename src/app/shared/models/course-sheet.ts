@@ -1,14 +1,11 @@
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import * as uuid from 'uuid';
-
-import { Author } from './author';
 
 export class CourseSheet {
 
     id: string = uuid.v4();
     name: string;
-    image: string;
+    image: any;
     category: any;
     author: any;
     postDate: Date = new Date();
@@ -16,7 +13,7 @@ export class CourseSheet {
     downloadDate: Date = new Date();
     price: number;
 
-    constructor(name?: string, image?: string, category?: string, author?: string, price?: number) {
+    constructor(name?: string, image?: any, category?: string, author?: string, price?: number) {
         this.name = name;
         this.image = image;
         this.category = category;

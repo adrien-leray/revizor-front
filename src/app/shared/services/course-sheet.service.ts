@@ -54,7 +54,19 @@ export class CourseSheetService {
   createCourse(sheet: CourseSheet): Observable<CourseSheet> {
     const token: string = this.sessionService.getSession().accessToken;
     const headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<CourseSheet>(`${environment.apiUrl}api/v1/fiches`, sheet.toDto(), { headers });
+
+    console.log(sheet);
+
+    const formData = new FormData();
+    formData.append('name', sheet.name);
+    formData.append('category', sheet.category);
+    formData.append('author', sheet.author);
+    formData.append('publication_date', sheet.postDate.toISOString());
+    formData.append('updated_date', sheet.updateDate.toISOString());
+    formData.append('price', sheet.price.toString());
+    formData.append('image', sheet.image, sheet.image.name);
+
+    return this.http.post<CourseSheet>(`${environment.apiUrl}api/v1/fiches`, formData, { headers });
   }
 
   updateCourse(sheet: CourseSheet): Observable<CourseSheet> {

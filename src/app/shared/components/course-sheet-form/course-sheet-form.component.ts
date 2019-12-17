@@ -2,6 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CourseSheet } from '../../models/course-sheet';
 import { CourseSheetService } from '../../services/course-sheet.service';
+import { Category } from '../../models/category';
+import { CategoryService } from '../../services/category.service';
+import { of, Observable } from 'rxjs';
+import { Author } from '../../models/author';
+import { AuthorService } from '../../services/author.service';
 
 @Component({
   selector: 'app-course-sheet-form',
@@ -11,9 +16,27 @@ import { CourseSheetService } from '../../services/course-sheet.service';
 export class CourseSheetFormComponent implements OnInit {
 
   form: FormGroup = null;
+  fileToUpload: File = null;
+
+  private _editionMod: string = null;
+  onEdit = false;
+  onAdd = false;
+
+  get editionMod(): string {
+    return this._editionMod;
+  }
 
   @Input()
-  editionMod: string = null;
+  set editionMod(editionMod: string) {
+    this._editionMod = editionMod;
+    if (editionMod.localeCompare('Edit')) {
+      this.onAdd = false;
+      this.onEdit = true;
+    } else {
+      this.onEdit = false;
+      this.onAdd = true;
+    }
+  }
 
   private _courseSheet = null;
 
@@ -29,18 +52,40 @@ export class CourseSheetFormComponent implements OnInit {
     }
   }
 
+  categories: Observable<Category[]> = of([]);
+  authors: Observable<Author[]> = of([]);
+
   @Output('onCancel') onCancelEventEmitter = new EventEmitter<void>();
 
-  constructor(private fb: FormBuilder, private courseSheetService: CourseSheetService) { }
+  constructor(private fb: FormBuilder, private courseSheetService: CourseSheetService, private categoryService: CategoryService, private authorService: AuthorService) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: [this.courseSheet ? this.courseSheet.name : '', [Validators.required]],
-      image: [this.courseSheet ? this.courseSheet.image : '', [Validators.required]],
-      category: [this.courseSheet ? this.courseSheet.category : '', [Validators.required]],
-      author: [this.courseSheet ? this.courseSheet.author : '', [Validators.required]],
-      price: [this.courseSheet ? this.courseSheet.price : '', [Validators.required]]
+      name: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+      author: ['', [Validators.required]],
+      price: ['', [Validators.required]]
     });
+
+    if (this.courseSheet) {
+      this.courseSheet.category.subscribe((category: Category) => {
+        this.courseSheet.author.subscribe((author: Author) => {
+          this.form.patchValue({
+            name: this.courseSheet.name,
+            category: category.id,
+            author: author.id,
+            price: this.courseSheet.price,
+          });
+        });
+      });
+    } else {
+      this.form.patchValue({
+        author: 'You',
+      });
+    }
+
+    this.categories = this.categoryService.getCategories();
+    this.authors = this.authorService.getAuthors();
   }
 
   cancelEditMode() {
@@ -50,7 +95,7 @@ export class CourseSheetFormComponent implements OnInit {
   onSubmit(): void {
     const formValue: any = this.form.value;
     const courseSheet: CourseSheet
-      = new CourseSheet(formValue.name, formValue.image, formValue.category, formValue.author, formValue.price);
+      = new CourseSheet(formValue.name, this.fileToUpload, formValue.category, formValue.author, formValue.price);
     courseSheet.updateDate = new Date();
     courseSheet.postDate = new Date();
 
@@ -62,6 +107,10 @@ export class CourseSheetFormComponent implements OnInit {
 
     // close edit mode
     this.cancelEditMode();
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
   }
 
 }

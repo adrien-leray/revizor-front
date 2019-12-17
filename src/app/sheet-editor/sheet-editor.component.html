@@ -2,7 +2,8 @@
     <div class="row">
         <!--#region courses sheet table -->
         <section class="col-12 mb-3">
-            <button mdbBtn type="button" color="deep-orange" mdbWavesEffect (click)="activateEditMode(null)"><mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Add Sheet</button>
+            <button mdbBtn *ngIf="!onEdit && !onAdd" type="button" color="deep-orange" mdbWavesEffect (click)="activateEditMode(null)"><mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Add Sheet</button>
+            <button mdbBtn *ngIf="onEdit || onAdd" type="button" color="danger" mdbWavesEffect (click)="deactivateEditMode()"><mdb-icon fas icon="ban" class="mr-1"></mdb-icon>Cancel</button>
             <mdb-card>
                 <mdb-card-body class="overflow-x-scroll">
                     <table mdbTable>
@@ -32,17 +33,17 @@
                                 <td>{{course.downloadDate | date: 'medium'}}</td>
                                 <td>{{course.price}}</td>
                                 <td>
-                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="info" mdbWavesEffect
+                                    <button *ngIf="!onEdit && !onAdd" type="button" size="sm" mdbBtn color="info" mdbWavesEffect
                                         (click)="downloadSheet(course)">
                                         <mdb-icon fas icon="file-download"></mdb-icon>
                                         download
                                     </button>
-                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="primary"
+                                    <button *ngIf="!onEdit && !onAdd" type="button" size="sm" mdbBtn color="primary"
                                         mdbWavesEffect (click)="activateEditMode(course)">
                                         <mdb-icon far icon="edit"></mdb-icon>
                                         edit
                                     </button>
-                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="danger" mdbWavesEffect
+                                    <button *ngIf="!onEdit && !onAdd" type="button" size="sm" mdbBtn color="danger" mdbWavesEffect
                                         (click)="removeSheet(course)">
                                         <mdb-icon far icon="trash-alt"></mdb-icon>
                                         delete
