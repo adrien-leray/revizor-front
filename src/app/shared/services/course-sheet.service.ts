@@ -39,8 +39,14 @@ export class CourseSheetService {
     return this.http.get<CourseSheet[]>(`${environment.apiUrl}api/v1/fiches`, {})
       .pipe(
         map(sheets => {
-          const _sheets: CourseSheet[] = sheets.map((sheet: CourseSheet) => CourseSheet.toModel(sheet));
-          return _sheets.filter(sheet => sheet.author === id);
+          const _sheets: CourseSheet[] = sheets.map((sheet: CourseSheet) => {
+            sheet.category = this.categoryService.getCategory(sheet.category);
+            return CourseSheet.toModel(sheet);
+          });
+          return _sheets.filter(sheet => {
+            console.log(sheet, id);
+            return sheet.author === id;
+          });
         })
       );
   }
