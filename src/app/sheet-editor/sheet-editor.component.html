@@ -20,13 +20,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr mdbTableCol *ngFor="let course of courses | async">
+                            <tr mdbTableCol *ngFor="let course of (courses | async)">
                                 <th scope="row">
                                     <img [src]="course.image" width="32" height="32">
                                 </th>
                                 <td>{{course.name}}</td>
-                                <td>{{course.category}}</td>
-                                <td>{{course.author}}</td>
+                                <td>{{(course.category | async)?.name}}</td>
+                                <td>{{(course.author | async)?.firstname}} {{(course.author | async)?.lastname}}</td>
                                 <td>{{course.postDate | date: 'medium'}}</td>
                                 <td>{{course.updateDate | date: 'medium'}}</td>
                                 <td>{{course.downloadDate | date: 'medium'}}</td>
@@ -69,8 +69,8 @@
         <section [hidden]="true" #courseSheet>
             <h2>Fiche: {{ sheet?.name | uppercase }}</h2>
             <ul>
-                <li>Catégorie: {{sheet?.category}}</li>
-                <li>Auteur: {{sheet?.author}}</li>
+                <li>Catégorie: {{(sheet?.category | async)?.name}}</li>
+                <li>Auteur: {{(sheet?.author | async)?.firstname}} {{(sheet?.author | async)?.lastname}}</li>
                 <li>Date de publication: {{sheet?.postDate | date: 'medium'}}</li>
                 <li>Date de la dernière mise à jour: {{sheet?.updateDate | date: 'medium'}}</li>
                 <li>Tarif: <b>{{sheet?.price}} euros</b></li>

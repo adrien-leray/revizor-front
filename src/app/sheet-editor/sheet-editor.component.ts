@@ -47,7 +47,7 @@ export class SheetEditorComponent implements OnInit {
           this.router.navigate(['/market']);
         }
       });
-    this.courses = this.courseSheetService.getMyList(this.user.name);
+    this.courses = this.courseSheetService.getMyList();
   }
 
   getImgFromUrl(logo_url, callback) {
