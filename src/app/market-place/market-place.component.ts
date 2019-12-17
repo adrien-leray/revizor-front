@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseSheet } from '../shared/models/course-sheet';
-import { CourseSheetService } from '../shared/services/course-sheet.service';
-import { of, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, of } from 'rxjs';
+
+import { CourseSheet } from '../shared/models/course-sheet';
+import { AuthorService } from '../shared/services/author.service';
+import { CourseSheetService } from '../shared/services/course-sheet.service';
 
 @Component({
   selector: 'app-market-place',
@@ -18,9 +20,9 @@ export class MarketPlaceComponent implements OnInit {
   ngOnInit() {
     this.courses = this.courseSheetService.getAll();
     this.courses.subscribe(
-      (sheets: CourseSheet[]) => {},
-      (err) => this.toastr.error('Server is down!', 'Oups')
-    );
+        (sheets: CourseSheet[]) => {},
+        (err) => this.toastr.error('Server is down!', 'Oups')
+      );
   }
 
 }

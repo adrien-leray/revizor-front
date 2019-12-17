@@ -9,7 +9,7 @@
                             <img [src]="course.image" width="64" height="64">
                             <div>
                                 <p class="title">{{ course.name }}</p>
-                                <p class="category"><span class="orange-text">{{ course.category }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{course.postDate | date: 'mediumDate'}}</p>
+                                <p class="category"><span class="orange-text">{{ (course.category | async)?.name }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{course.postDate | date: 'mediumDate'}}&nbsp;&nbsp;|&nbsp;&nbsp;by {{(course.author | async)?.firstname}} {{(course.author | async)?.lastname}}</p>
                                 <p class="price">{{ course.price | number: '1.2-2' }}<span class="devise">€</span></p>
                             </div>
                         </div>
