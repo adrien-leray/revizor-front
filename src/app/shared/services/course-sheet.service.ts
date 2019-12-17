@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 import { CourseSheet } from '../models/course-sheet';
 import { SessionService } from './session.service';
+import { AuthorService } from './author.service';
+import { CategoryService } from './category.service';
 
 export const COURSES_SHEET_STUB: CourseSheet[] = [
   new CourseSheet('Angular course', "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/220px-Angular_full_color_logo.svg.png", "Programming", "Prof X", 100),
@@ -22,27 +24,36 @@ export class CourseSheetService {
 
   courses: CourseSheet[] = [];
 
-  constructor(private http: HttpClient, private sessionService: SessionService) { }
+  constructor(private http: HttpClient, private sessionService: SessionService, private authorService: AuthorService, private categoryService: CategoryService) { }
 
   getAll(): Observable<CourseSheet[]> {
     return this.http.get<CourseSheet[]>(`${environment.apiUrl}api/v1/fiches`, {})
-      .pipe(map(sheets => {
-        sheets.map(sheet => sheet.image = environment.apiUrl + sheet.image);
-        return sheets;
-      }));
+      .pipe(map(sheets => sheets.map(sheet => {
+        sheet.author = this.authorService.getAuthor(sheet.author);
+        sheet.category = this.categoryService.getCategory(sheet.category);
+        return CourseSheet.toModel(sheet);
+      })));
   }
 
   getMyList(id: string): Observable<CourseSheet[]> {
     return this.http.get<CourseSheet[]>(`${environment.apiUrl}api/v1/fiches`, {})
-      .pipe(map(sheets => sheets.filter(sheet => sheet.author === id)));
+      .pipe(
+        map(sheets => {
+          const _sheets: CourseSheet[] = sheets.map((sheet: CourseSheet) => {
+            sheet.category = this.categoryService.getCategory(sheet.category);
+            return CourseSheet.toModel(sheet);
+          });
+          return _sheets.filter(sheet => {
+            console.log(sheet, id);
+            return sheet.author === id;
+          });
+        })
+      );
   }
 
   getById(id: string): Observable<CourseSheet> {
     return this.http.get<CourseSheet>(`${environment.apiUrl}api/v1/fiches/${id}`, {})
-      .pipe(map(sheet => {
-        sheet.image = environment.apiUrl + sheet.image;
-        return sheet;
-      }));
+      .pipe(map(sheet => CourseSheet.toModel(sheet)));
   }
 
   createCourse(sheet: CourseSheet): Observable<CourseSheet> {
