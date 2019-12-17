@@ -26,6 +26,7 @@ export class CourseSheet {
 
     static toModel(dto: any): CourseSheet {
         const model = new CourseSheet();
+        model.id = dto.id;
         model.name = dto.name;
         model.image = environment.apiUrl + dto.image;
         model.category = dto.category;

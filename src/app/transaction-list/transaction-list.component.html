@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Your transactions</h2>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <!--#region courses sheet table -->
+        <section class="col-12 mb-3">
+            <mdb-card>
+                <mdb-card-body class="overflow-x-scroll">
+                    <table mdbTable>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Last post date</th>
+                                <th scope="col">Last update date</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr mdbTableCol *ngFor="let course of courses">
+                                <th scope="row">
+                                    <img [src]="course.image" width="32" height="32">
+                                </th>
+                                <td>{{course.name}}</td>
+                                <td>{{course.category}}</td>
+                                <td>{{course.author}}</td>
+                                <td>{{course.publication_date | date: 'medium'}}</td>
+                                <td>{{course.updated_date | date: 'medium'}}</td>
+                                <td>{{course.price}}</td>
+                                <td>
+                                    <button *ngIf="!onEdit" type="button" size="sm" mdbBtn color="info" mdbWavesEffect
+                                        (click)="downloadSheet(course)">
+                                        <mdb-icon fas icon="file-download"></mdb-icon>
+                                        download
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mdb-card-body>
+            </mdb-card>
+        </section>
+        <!--#endregion-->
+        <!--#region course-item edit form -->
+        <section class="col-12 col-md-6" *ngIf="onEdit">
+            <app-course-sheet-form [courseSheet]="sheet" (onCancel)="deactivateEditMode()"></app-course-sheet-form>
+        </section>
+        <!--#endregion-->
+
+        <section [hidden]="true" #courseSheet>
+            <h2>Fiche: {{ sheet?.name | uppercase }}</h2>
+            <ul>
+                <li>Catégorie: {{sheet?.category}}</li>
+                <li>Auteur: {{sheet?.author}}</li>
+                <li>Date de publication: {{sheet?.postDate | date: 'medium'}}</li>
+                <li>Date de la dernière mise à jour: {{sheet?.updateDate | date: 'medium'}}</li>
+                <li>Tarif: <b>{{sheet?.price}} euros</b></li>
+            </ul>
+        </section>
+    </div>
+</div>

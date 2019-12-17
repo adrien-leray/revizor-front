@@ -17,6 +17,7 @@ import { SheetEditorComponent } from './sheet-editor/sheet-editor.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { StripeCheckoutModule } from 'ng-stripe-checkout';
 import { ToastrModule } from 'ngx-toastr';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
     NavbarComponent,
     CourseSheetListComponent,
     CourseSheetFormComponent,
+    TransactionListComponent,
   ],
   imports: [
     BrowserModule,
