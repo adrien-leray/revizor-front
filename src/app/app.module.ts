@@ -16,6 +16,7 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { SheetEditorComponent } from './sheet-editor/sheet-editor.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { StripeCheckoutModule } from 'ng-stripe-checkout';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { StripeCheckoutModule } from 'ng-stripe-checkout';
     HttpClientModule,
     StripeCheckoutModule,
     MarkdownModule.forRoot({ loader: HttpClient }),
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
