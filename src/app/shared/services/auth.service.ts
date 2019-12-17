@@ -16,7 +16,6 @@ export class AuthService {
   constructor(private sessionService: SessionService, private router: Router, private http: HttpClient) { }
 
   login(logs: Logs): void {
-    console.log(logs);
     this.http.post(`${environment.apiUrl}api/token/`, logs.toDto(), {})
       .subscribe((tokens: any) => {
         const user: User = new User('admin', logs.mail);

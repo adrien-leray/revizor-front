@@ -31,7 +31,6 @@ export class CourseSheetListComponent implements OnInit {
   }
 
   public onClickBuy(course: CourseSheet) {
-    console.log(course, 'course');
     this.stripeCheckoutHandler.open({
       amount: course.price * 100,
       currency: 'EUR',

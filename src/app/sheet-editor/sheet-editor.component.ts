@@ -71,7 +71,6 @@ export class SheetEditorComponent implements OnInit {
     setTimeout(() => {
       const doc = new jsPDF();
       const template = sheetTemplate.innerHTML;
-      console.log(template);
       doc.fromHTML(template, 15, 15, { width: 190 });
       doc.addImage(image, 'image/png', 150, 20, 32, 32);
       doc.save(`${sheet.name.split(' ').join('-').toLowerCase()}-${this.formatDate(sheet.postDate)}.pdf`);
@@ -94,7 +93,6 @@ export class SheetEditorComponent implements OnInit {
       this.onAdd = true;
       this.editionMod = 'Add';
     }
-    console.log(course, this.onEdit, this.onAdd);
   }
 
   deactivateEditMode(): void {

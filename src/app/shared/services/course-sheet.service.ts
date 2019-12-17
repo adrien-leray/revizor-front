@@ -44,7 +44,6 @@ export class CourseSheetService {
             return CourseSheet.toModel(sheet);
           });
           return _sheets.filter(sheet => {
-            console.log(sheet, id);
             return sheet.author === id;
           });
         })
@@ -57,7 +56,6 @@ export class CourseSheetService {
   }
 
   createCourse(sheet: CourseSheet): Observable<CourseSheet> {
-    console.log('ajout de cours');
     const token: string = this.sessionService.getSession().accessToken;
     const headers: HttpHeaders = new HttpHeaders();
     headers.append('Authorization', `Bearer ${token}`);
@@ -65,7 +63,6 @@ export class CourseSheetService {
   }
 
   updateCourse(sheet: CourseSheet): Observable<CourseSheet> {
-    console.log('edition de cours');
     const token: string = this.sessionService.getSession().accessToken;
     const headers: HttpHeaders = new HttpHeaders();
     headers.append('Authorization', `Bearer ${token}`);
