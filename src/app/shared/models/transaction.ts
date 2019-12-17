@@ -7,10 +7,4 @@ export class Transaction {
     constructor(fiche: number) {
         this.fiche = fiche;
     }
-
-    toDto(): any {
-        return {
-            fiche: this.fiche,
-        }
-    }
 }
