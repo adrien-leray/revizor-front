@@ -19,6 +19,7 @@ import { StripeCheckoutModule } from 'ng-stripe-checkout';
 import { ToastrModule } from 'ngx-toastr';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

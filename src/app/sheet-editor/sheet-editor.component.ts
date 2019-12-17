@@ -80,7 +80,7 @@ export class SheetEditorComponent implements OnInit {
   removeSheet(sheet: CourseSheet): void {
     this.sheet = null;
     this.onEdit = false;
-    this.courseSheetService.removeCourse(sheet);
+    this.courseSheetService.removeCourse(sheet).subscribe();
   }
 
   activateEditMode(course: CourseSheet): void {
