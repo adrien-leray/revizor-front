@@ -7,13 +7,14 @@ import { User } from '../models/user';
 import { SessionService } from './session.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private sessionService: SessionService, private router: Router, private http: HttpClient) { }
+  constructor(private sessionService: SessionService, private router: Router, private http: HttpClient, private toastr: ToastrService) { }
 
   login(logs: Logs): void {
     this.http.post(`${environment.apiUrl}api/token/`, logs.toDto(), {})
@@ -25,7 +26,10 @@ export class AuthService {
         this.sessionService.setSession(session);
         this.router.navigate(['/market']);
       },
-      (err) => this.router.navigate(['/market']));
+      (err) => {
+        this.toastr.error('Bad credentials !', 'Failed to sign in');
+        this.router.navigate(['/market']);
+      });
 
   }
 
